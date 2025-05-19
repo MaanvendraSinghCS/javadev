@@ -2,7 +2,8 @@ import java.util.Random;
 public class GameLauncher
 {
     public static void main(String[] args) {
-        
+        GueassGame game = new GueassGame();
+        game.startGame();
     }
 }
 class GueassGame
@@ -19,7 +20,7 @@ class GueassGame
 
         
         Random r = new Random();
-        int target = r.nextInt(11);
+        int target = r.nextInt(20);
         System.out.println("Number to guess is: " + target);
         while(true)
         {
@@ -49,6 +50,6 @@ class Player
     public void guess()
     {
         Random g = new Random();
-        number = g.nextInt(11);
+        number = g.nextInt(20);
     }
 }
