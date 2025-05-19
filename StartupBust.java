@@ -14,7 +14,7 @@ class GameHelper
         {
             this.row = row;
             this.col = col;
-            oddOrEven = (row + col)%2 == 1;
+            oddOrEven = (row*7 + col)%2 == 1;
         }
     }
     private static final int GRID_LENGTH = 7;
@@ -48,7 +48,10 @@ class GameHelper
         List<String> names = makeStartUps();
         for(String name : names)
         {
-            
+            int length = name.length();
+            int indexStartUp = random.nextInt(GRID_LENGTH * GRID_LENGTH);
+            int row = indexStartUp / GRID_LENGTH;
+            int col = indexStartUp % GRID_LENGTH;
         }
     }
 
@@ -76,6 +79,67 @@ class GameHelper
         }
         else return null;
         
+    }
+    public int checkStartUp(Coords c, int length)
+    {
+        
+        int direct = 0;
+        if(c.oddOrEven)
+        {
+            //check in vertical for availability
+            if((c.row + length) < GRID_LENGTH)
+            {
+                for(int i = 0; i < length; i++)
+                {
+                    if(grid[c.row + i][c.col] == 1)
+                    {
+                        direct = 0;
+                        break;
+                    }
+                }
+                direct = 2;
+            }
+            else if((c.row + GRID_LENGTH - length)%GRID_LENGTH < GRID_LENGTH)
+            {
+                for(int i = 0; i < length; i++)
+                {
+                    if(grid[(c.row + GRID_LENGTH - i)%GRID_LENGTH][c.col] == 1)
+                    {
+                        direct = 0;
+                        break;
+                    }
+                }
+                direct = 4;
+            }
+        }
+        else
+        {
+            if((c.col + length) < GRID_LENGTH)
+            {
+                for(int i = 0; i < length; i++)
+                {
+                    if(grid[c.row][c.col + i] == 1)
+                    {
+                        direct = 0;
+                        break;
+                    }
+                }
+                direct = 3;
+            }
+            else if((c.col + GRID_LENGTH - length)%GRID_LENGTH < GRID_LENGTH)
+            {
+                for(int i = 0; i < length; i++)
+                {
+                    if(grid[c.row][(c.col + GRID_LENGTH - length)%GRID_LENGTH] == 1)
+                    {
+                        direct = 0;
+                        break;
+                    }
+                }
+                direct = 1;
+            }
+        }
+        return direct;
     }
 }
 
